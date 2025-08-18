@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monad Passport Generator</title>
+  <link rel="stylesheet" href="build/css/countrySelect.css">
+  <link rel="stylesheet" href="build/css/demo.css">
+  <link href="https://fonts.googleapis.com/css2?family=Jaini+Purva&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #DACAF1;
+      font-family: 'Jaini Purva', cursive;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+
+    }
+
+    .passport-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .passport-bg {
+      width: 600px;
+      border-radius: 10px;
+    }
+
+    .details {
+      position: absolute;
+      top: 92px;
+      left: 383px;
+      color: #5c3d99;
+      font-size: 20px;
+    }
+
+    .details div {
+      margin: 21px 0;
+    }
+
+    .profile-pic {
+      position: absolute;
+      top: 113px;
+      left: 124px;
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      display: flex;
+      background-color: #7e57c2;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button:hover {
+      background-color: #5e35b1;
+    }
+
+    .inside {
+      position: relative;
+      right: 14px;
+    }
+
+    #houseInput {
+      height: 36px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Monad Passport Generator</h1>
+
+  <!-- Step 1 -->
+  <div id="step1" class="step active">
+    <input type="file" id="profileInput" accept="image/*" required><br><br>
+    <input type="text" id="nameInput" placeholder="Name" required>
+    <div class="form-item">
+      <input id="country_selector" type="text" required>
+      <label for="country_selector" style="display:none;">Select a country here...</label>
+    </div>
+    <div class="form-item" style="display:none;">
+      <input type="text" id="country_selector_code" name="country_selector_code" data-countrycodeinput="1"
+        readonly="readonly" placeholder="Selected country code will appear here" required />
+      <label for="country_selector_code">...and the selected country code will be updated here</label>
+    </div>
+
+
+    <select id="houseInput" required>
+      <option value="Chog">Chog</option>
+      <option value="Dak">Dak</option>
+      <option value="Yaki">Yaki</option>
+    </select><br><br>
+    <input type="date" id="joinedInput" placeholder="Joined On" required><br><br>
+    <button onclick="goToStep2()">Next</button>
+  </div>
+
+  <!-- Step 2 -->
+  <div id="step2" class="step">
+    <div class="passport-container" id="passport">
+      <img src="passport.png" class="passport-bg">
+      <img id="profilePic" class="profile-pic" style="display:none;">
+      <div class="details">
+        <div id="nameField"></div>
+        <div id="fromField"></div>
+        <div id="houseField"></div>
+        <div id="joinedField"></div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button onclick="downloadImage()">Download</button>
+      <button onclick="shareOnX()">Share</button>
+      <button onclick="window.open('https://x.com/senseiincrypto','_blank')">Follow Sensei</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    // function goToStep2() {
+    //   document.getElementById('nameField').innerText = " " + document.getElementById('nameInput').value;
+    //   document.getElementById('fromField').innerText = " " + document.getElementById('country_selector').value;
+    //   document.getElementById('houseField').innerText = " " + document.getElementById('houseInput').value;
+    //   document.getElementById('joinedField').innerText = "" + document.getElementById('joinedInput').value;
+
+    //   const file = document.getElementById('profileInput').files[0];
+    //   if (file) {
+    //     const reader = new FileReader();
+    //     reader.onload = function (e) {
+    //       document.getElementById('profilePic').src = e.target.result;
+    //       document.getElementById('profilePic').style.display = 'block';
+    //     };
+    //     reader.readAsDataURL(file);
+    //   }
+
+    //   document.getElementById('step1').classList.remove('active');
+    //   document.getElementById('step2').classList.add('active');
+    // }
+
+    function goToStep2() {
+      const nameInput = document.getElementById('nameInput').value.trim();
+      const country = document.getElementById('country_selector').value.trim();
+      const houseInput = document.getElementById('houseInput').value.trim();
+      const joinedInput = document.getElementById('joinedInput').value.trim();
+      const profileFile = document.getElementById('profileInput').files[0];
+
+      // Check if all fields are filled
+      if (!nameInput) {
+        alert("Please enter your name.");
+        return;
+      }
+      if (!country) {
+        alert("Please select your country.");
+        return;
+      }
+      if (!houseInput) {
+        alert("Please enter your house info.");
+        return;
+      }
+      if (!joinedInput) {
+        alert("Please enter the joined date.");
+        return;
+      }
+      if (!profileFile) {
+        alert("Please select a profile picture.");
+        return;
+      }
+
+      // Set values to step 2 fields
+      document.getElementById('nameField').innerText = " " + nameInput;
+      document.getElementById('fromField').innerText = " " + country;
+      document.getElementById('houseField').innerText = " " + houseInput;
+      document.getElementById('joinedField').innerText = " " + joinedInput;
+
+      // Load profile picture
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById('profilePic').src = e.target.result;
+        document.getElementById('profilePic').style.display = 'block';
+      };
+      reader.readAsDataURL(profileFile);
+
+      // Move to step 2
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('step2').classList.add('active');
+    }
+
+
+    function downloadImage() {
+      html2canvas(document.getElementById('passport')).then(canvas => {
+        const ctx = canvas.getContext('2d');
+        ctx.font = "20px 'Jaini Purva'";
+        ctx.fillStyle = "#7e57c2";
+        ctx.fillText("Made with 💜 by @senseiincrypto", 20, canvas.height - 20);
+
+        const link = document.createElement('a');
+        link.download = 'monad_passport.png';
+        link.href = canvas.toDataURL();
+        link.click();
+        console.log(link)
+      });
+    }
+
+    function shareOnX() {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent("Check out my Monad Passport! 💜 #Monad");
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+    }
+  </script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="build/js/countrySelect.js"></script>
+  <script>
+    $("#country_selector").countrySelect({
+      // defaultCountry: "jp",
+      // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+      // responsiveDropdown: true,
+      preferredCountries: ['ca', 'gb', 'us']
+    });
+  </script>
+</body>
+
+</html>
