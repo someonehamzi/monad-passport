@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="build/css/countrySelect.css">
   <link rel="stylesheet" href="build/css/demo.css">
   <link href="https://fonts.googleapis.com/css2?family=Jaini+Purva&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playwrite+HU:wght@100..400&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <style>
     body {
       background-color: #DACAF1;
@@ -16,6 +19,31 @@
       flex-direction: column;
       align-items: center;
       padding: 20px;
+
+    }
+
+    select{
+      font-family: 'Jaini Purva', cursive;
+      font-size: 18px;
+      border-radius: 8px;
+      color: black;
+    }
+
+    input{
+      font-family: 'Jaini Purva', cursive;
+      font-size: 18px;
+      padding: 14px 15px;
+      border-radius: 8px;
+      background-color: #ffffff00;
+      border: 1px solid #ffffff;
+      color: white;
+      height: 45px;
+    }
+
+    h1{
+      font-size: 30px;
+      color: #200053;
+      
     }
 
     .step {
@@ -62,26 +90,29 @@
     .buttons {
       margin-top: 20px;
       display: flex;
-      gap: 15px;
+      gap: 20px;
       flex-wrap: wrap;
       justify-content: center;
     }
 
     button {
       display: flex;
-      background-color: #7e57c2;
+      background-color: #5e35b1;
+      border: 2px solid white;
       color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
+      padding: 22px 36px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
+      font-family: "DM Sans", sans-serif;
+      font-weight: 600;
       justify-content: center;
       align-items: center;
     }
 
     button:hover {
-      background-color: #5e35b1;
+      background-color: #2c057c;
+      border: 2px solid #5e35b1;      
     }
 
     .inside {
@@ -90,18 +121,66 @@
     }
 
     #houseInput {
-      height: 36px;
+      height: 45px;
+      background-color: #ffffff00;
+      color: white;
+      padding: 0px 10px;
     }
+
+    img{
+      width: 80px;
+    }
+
+    #step1{
+      background-color: #6634cc;
+      padding: 20px 36px;
+      border-radius: 20px;
+      border: 2px solid #c8adff;
+    }
+
+    #profileInput{
+      border: none;
+    }
+    #profileInput button{
+      padding: 10px 20px;
+      background-color: #c8adff;
+    }
+    input #file-upload-button{
+      padding: 10px 20px;
+      background-color: #c8adff;
+    }
+
+    select option{
+      color: black;
+    }
+    input[type="file"]{
+      display: none;
+    }
+    label{
+      display: inline-block;
+      text-transform: uppercase;
+      color: white;
+      background-color: #8f57ff;
+      border: 2px solid #fff;
+      font-size: 18px;
+      padding: 12px 36px;
+      border-radius: 10px;
+    }
+    label:hover{
+      box-shadow: 1px 0px 16px 4px #2000538e;
+    }
+    
   </style>
 </head>
 
 <body>
-
+  <img src="monad-logo.png" alt="Monad Logo">
   <h1>Monad Passport Generator</h1>
 
   <!-- Step 1 -->
   <div id="step1" class="step active">
-    <input type="file" id="profileInput" accept="image/*" required><br><br>
+    <input type="file" id="profileInput" accept="image/*" required>
+    <label for="profileInput" id="uploadLabel" class="custom-label">Upload Your Image</label><br><br>
     <input type="text" id="nameInput" placeholder="Name" required>
     <div class="form-item">
       <input id="country_selector" type="text" required>
@@ -136,9 +215,9 @@
       </div>
     </div>
     <div class="buttons">
-      <button onclick="downloadImage()">Download</button>
-      <button onclick="shareOnX()">Share</button>
-      <button onclick="window.open('https://x.com/senseiincrypto','_blank')">Follow Sensei</button>
+      <button onclick="downloadImage()" class="button1">Download Passport</button>
+      <button onclick="shareOnX()" class="buton2">Share On X</button>
+      <button onclick="window.open('https://x.com/senseiincrypto','_blank')" class="button3">Follow Sensei</button>
     </div>
   </div>
 
@@ -241,7 +320,22 @@
       // defaultCountry: "jp",
       // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
       // responsiveDropdown: true,
-      preferredCountries: ['ca', 'gb', 'us']
+      preferredCountries: ['monadland', 'gb', 'us']
+    });
+    
+    const fileInput = document.getElementById("profileInput");
+    const uploadLabel = document.getElementById("uploadLabel");
+
+    fileInput.addEventListener("change", function () {
+      if (fileInput.files.length > 0) {
+        // Option 1: Show file name
+        uploadLabel.textContent = fileInput.files[0].name;
+
+        // Option 2 (instead of file name, just show uploaded msg)
+        // uploadLabel.textContent = "Image uploaded ✅";
+      } else {
+        uploadLabel.textContent = "Upload Image";
+      }
     });
   </script>
 </body>

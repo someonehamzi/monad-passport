@@ -21,6 +21,16 @@
 	padding-right:36px;
 	margin-right:0
 }
+
+.country-select .flag.monadland {
+	background: none !important;
+  background-image: url("monadland.png") !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
 .country-select .flag-dropdown{
 	position:absolute;
 	top:0;

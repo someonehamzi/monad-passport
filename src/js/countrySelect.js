@@ -1164,7 +1164,7 @@
 		n: "Oman (‫عُمان‬‎)",
 		i: "om"
 	}, {
-		n: "Pakistan (‫پاکستان‬‎)",
+		n: "Pakistan",
 		i: "pk"
 	}, {
 		n: "Palau",
