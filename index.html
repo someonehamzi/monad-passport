@@ -169,6 +169,14 @@
     label:hover{
       box-shadow: 1px 0px 16px 4px #2000538e;
     }
+
+    .button2{
+      background-color: #0e0016;
+    }
+
+    .button3{
+      background-color: #1c0029;
+    }
     
   </style>
 </head>
@@ -215,9 +223,9 @@
       </div>
     </div>
     <div class="buttons">
-      <button onclick="downloadImage()" class="button1">Download Passport</button>
-      <button onclick="shareOnX()" class="buton2">Share On X</button>
       <button onclick="window.open('https://x.com/senseiincrypto','_blank')" class="button3">Follow Sensei</button>
+      <button onclick="downloadImage()" class="button1">Download Passport</button>
+      <button onclick="shareOnX()" class="button2">Share On X</button>
     </div>
   </div>
 
@@ -313,7 +321,7 @@
       window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
     }
   </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="build/js/countrySelect.js"></script>
   <script>
     $("#country_selector").countrySelect({
@@ -339,6 +347,5 @@
     });
   </script>
 </body>
-
 
 </html>
